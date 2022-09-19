@@ -67,8 +67,6 @@ class Auth with ChangeNotifier {
       });
       prefs.setString('userData', userData);
       keepLoggedIn();
-
-      print(prefs.getString('userData'));
     } catch (error) {
       print(error);
       throw error;
@@ -84,7 +82,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> keepLoggedIn() async {
-    final timeToExpiry = _expiryDate!.difference(DateTime.now()).inSeconds;
+    final timeToExpiry = _expiryDate!.difference(DateTime.now()).inMinutes;
     _authTimer = Timer(Duration(seconds: timeToExpiry), tryAutoLogin);
   }
 
@@ -108,9 +106,6 @@ class Auth with ChangeNotifier {
     _expiryDate = expiryDate;
 
     notifyListeners();
-
-    print(_token);
-    print(_userId);
 
     return true;
   }
